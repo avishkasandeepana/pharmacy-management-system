@@ -1,5 +1,9 @@
+
+
+
+
 <?php
-session_start();
+
 
 if (isset($_SESSION['soonExpiringMedicine']) && !empty($_SESSION['soonExpiringMedicine'])) {
     $soonExpiringMedicine = $_SESSION['soonExpiringMedicine'];
@@ -18,7 +22,7 @@ if (isset($_SESSION['soonExpiringMedicine']) && !empty($_SESSION['soonExpiringMe
 
 
 <?php require 'expire_medicine_cal.php'?>
-<?php require 'index.php'; ?>
+<?php require 'sidebar.php'; ?>
 <?php require 'conn.php'; ?>
 <?php if (isset($yourArray['product_name']) && isset($yourArray['form']) && isset($yourArray['expire_date'])) {
     // Access the array keys here

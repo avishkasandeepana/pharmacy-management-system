@@ -1,10 +1,18 @@
 <?php
-require 'index.php'; ?>
+require 'sidebar.php'; ?>
 <?php require 'conn.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+<style>
+@media print {
+  #another-section {
+    float: right;
+    margin-left: 20px;
+  }
+}
+</style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -106,6 +114,7 @@ require 'index.php'; ?>
                   <!-- customer select part ends here -->
 
                   <!-- table starts here -->
+                  <div id="print-section">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
@@ -134,6 +143,7 @@ require 'index.php'; ?>
                       </div>
                     </div>
                   </div>
+  </div>
                   <!-- table ends here -->
 
                   <!-- this is the bottom of table  -->
@@ -180,53 +190,6 @@ require 'index.php'; ?>
                     <!-- testing payment -->
                     
                     <!-- testing payment ends -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -454,68 +417,84 @@ require 'index.php'; ?>
 
           <!-- RIGHT HAND -->
           <!-- RIGHT HAND -->
-<div class="col-md-4">
-  <div class="col-md-12">
-    <div class="card bg-">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-12 border-bottom">
-            <span class="col-md-6 text-right font-weight-bold">Total Items:</span>
-            <span class="col-md-6 text-right font-weight-bold custom-font-size sales_div_tot_qty total-quantity">0</span>
+          
+          <div id="another-section" >
+  <div class="col-md-4">
+    <div class="col-md-12">
+      <div class="card bg-">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12 border-bottom">
+              <span class="col-md-6 text-right font-weight-bold">Total Items:</span>
+              <span class="col-md-6 text-right font-weight-bold custom-font-size sales_div_tot_qty total-quantity">0</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 border-bottom">
+              <span class="col-md-6 text-right font-weight-bold">Total:</span>
+              <span class="col-md-6 text-right font-weight-bold custom-font-size sales_div_tot_amt tot_amt">0.00</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 border-bottom">
+              <span class="col-md-6 text-right font-weight-bold">Discount(-):</span>
+              <span class="col-md-6 text-right font-weight-bold custom-font-size sales_div_tot_discount">0.00</span>
+            </div>
+          </div>
+          <div class="row bg-danger">
+            <div class="col-md-12 border-bottom">
+              <span class="col-md-6 text-right font-weight-bold">Total Payable:</span>
+              <span class="tot_amt  text-right text-bold">0.00</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 border-bottom">
+              <span class="col-md-6 text-right font-weight-bold">Total Paying:</span>
+              <span class="total_paying  text-right" id="total_paying">0.00</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 border-bottom">
+              <span class="col-md-6 text-right font-weight-bold">Balance:</span>
+              <span class="col-md-6 text-right font-weight-bold custom-font-size sales_div_tot_balance balance">0.00</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 bg-warning">
+              <span class="col-md-6 text-right font-weight-bold">Change Return:</span>
+              <span class="col-md-6 text-right font-weight-bold custom-font-size sales_div_change_return change_return">0.00</span>
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12 border-bottom">
-            <span class="col-md-6 text-right font-weight-bold">Total:</span>
-            <span class="col-md-6 text-right font-weight-bold custom-font-size sales_div_tot_amt tot_amt">0.00</span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 border-bottom">
-            <span class="col-md-6 text-right font-weight-bold">Discount(-):</span>
-            <span class="col-md-6 text-right font-weight-bold custom-font-size sales_div_tot_discount">0.00</span>
-          </div>
-        </div>
-        <div class="row bg-danger">
-          <div class="col-md-12 border-bottom">
-            <span class="col-md-6 text-right font-weight-bold">Total Payable:</span>
-            <span class="tot_amt text-bold">0.00</span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 border-bottom">
-            <span class="col-md-6 text-right font-weight-bold">Total Paying:</span>
-            <span class="total_paying" id="total_paying">0.00</span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 border-bottom">
-            <span class="col-md-6 text-right font-weight-bold">Balance:</span>
-            <span class="col-md-6 text-right font-weight-bold custom-font-size sales_div_tot_balance balance">0.00</span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 bg-warning">
-            <span class="col-md-6 text-right font-weight-bold">Change Return:</span>
-            <span class="col-md-6 text-right font-weight-bold custom-font-size sales_div_change_return change_return">0.00</span>
-          </div>
-        </div>
+        <!-- /.card-body -->
       </div>
-      <!-- /.card-body -->
     </div>
   </div>
 </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-maroon btn-lg make_sale btn-lg" onclick=""><i class="fa fa-save"></i></button>
-        <a href="pdf.php"><button type="button" class="btn btn-success btn-lg make_sale btn-lg" onclick="saveAndPrint()"><i class="fa fa-print"></i> Save & Print</button></a>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+  <button type="button" class="btn btn-maroon btn-lg make_sale btn-lg" onclick=""><i class="fa fa-save"></i></button>
+  <a href="pdf.php"><button type="button" class="btn btn-success btn-lg make_sale btn-lg" onclick="saveAndPrint()"><i class="fa fa-print"></i> </button></a>
+  <input type="button" name="print" value="Print" onclick="printSection()">
 </div>
-<!-- ends -->
+
+<script>
+  function printSection() {
+    var sections = ['print-section1','print-section', 'another-section'];
+    var printContents = '';
+
+    sections.forEach(function(sectionId) {
+      var sectionContent = document.getElementById(sectionId).innerHTML;
+      printContents += sectionContent;
+    });
+
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+  }
+</script>
 
 
 
@@ -773,24 +752,6 @@ function addItemToTable(itemId, itemName, itemPrice, quantity) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Remove item from table
 $('#pos-form-tbody').on('click', '.remove-item', function() {
   $(this).closest('tr').remove();
@@ -1018,6 +979,13 @@ function saveAndPrint() {
     </div>
     <!-- footer start here always add footer in up to 2 div -->
     <?php require 'footer.php'; ?>
+    <div id="print-section1">
+      <p>Sadaru Pharmacy</p><br>
+      <p>NO 121/A/Kandy road</p><br>
+      <p>Daulagala</p><br>
+      <p>081-3256985</p><br>
+
+            </div>
     <!-- footer end here -->
   </div>
   </div>

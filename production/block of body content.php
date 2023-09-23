@@ -1,4 +1,4 @@
-<?php require 'index.php'; ?>
+<?php require 'sidebar.php'; ?>
 ?>
 <!DOCTYPE html>
 <html lang="en">

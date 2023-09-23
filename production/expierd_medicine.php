@@ -1,4 +1,4 @@
-<?php require 'index.php'; ?>
+<?php require 'sidebar.php'; ?>
 <?php require 'conn.php';?>
 <?php require 'expire_medicine_cal.php'?>
 

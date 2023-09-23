@@ -1,144 +1,141 @@
+<?php
+session_start();
+?>
+
+<?php
+require 'conn.php'; // database connection
+
+
+
+// in this case the stored hashed password is hashed using this 
+// During registration
+//$password = $_POST['password']; // Get the password from the user input
+//$hashed_password = password_hash($password, PASSWORD_DEFAULT); // Hash the password
+
+// Store $hashed_password in the database
+//
+
+
+
+if (isset($_POST['submit'])) {
+    $errors = array();
+
+    if (!isset($_POST['email']) || empty(trim($_POST['email']))) {
+        $errors[] = 'Email is missing or invalid';
+    }
+    if (!isset($_POST['password']) || empty(trim($_POST['password']))) {
+        $errors[] = 'Password is missing or invalid';
+    }
+
+    if (empty($errors)) {
+        $email = mysqli_real_escape_string($conn, $_POST['email']);
+        $password = mysqli_real_escape_string($conn, $_POST['password']);
+
+        // Prepare the database query
+        $query = "SELECT * FROM user WHERE em_email = '{$email}' LIMIT 1";
+        $resultset = mysqli_query($conn, $query);
+
+        if ($resultset) {
+            if (mysqli_num_rows($resultset) == 1) {
+                // Valid user found, verify the password
+                $user = mysqli_fetch_assoc($resultset);
+                if (password_verify($password, $user['em_password'])) {
+                    // Password is correct, user is authenticated
+                    // Redirect to a logged-in page or perform other actions here
+                    //getting logger information and store it to session variable
+					$_SESSION['user_id']=$user['id'];
+					$_SESSION['user_name']=$user['em_name'];
+
+                    // update last login
+                    $query = "UPDATE user SET last_login = NOW()";
+                    $query .= "WHERE id = {$_SESSION['user_id']} LIMIT 1";
+
+                        $resultset = mysqli_query($conn,$query);
+                        
+                        if(!$resultset){
+                            die('database query failed');
+                        }
+
+
+
+
+					echo "Login successful!";
+					header ('location:dashboard.php');
+                } else {
+                    $errors[] = 'Invalid password';
+                }
+            } else {
+                $errors[] = 'Username/Password missing or Invalid';
+            }
+        } else {
+            $errors[] = 'Database query failed';
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-  <?php  require 'head.php'; ?>
- 
-  <body class="nav-md">
-    <div class="container body">
-      <div class="main_container">
-        <div class="col-md-3 left_col menu_fixed">
-          <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-              <a href="dashboard.php" class="site_title"><i class="fa fa-cart-plus" aria-hidden="true"></i><span>Ayurvedic Center</span></a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+		body {
+			font-size: 14px;
+			font-family: 'Times New Roman', Times, serif;
+		}
+		.login {
+			width: 350px;
+			margin: 100px auto;
+
+			background-color: lightslategrey;
+		}
+		input {
+			display: block;
+			width: 100%;
+			padding: 5px;
+			box-sizing: border-box;
+
+		}
+		button {
+			width: 100%;
+			height: 25px;
+			background-color: lightgreen;
+			border-color:lightgreen ;
+			padding: 5px;
+			margin-bottom: 10px;
+		}
+		.error{
+			
+		}
+		</style>
+</head>
+<body>
+<div class="login">
+    <form method="post" action="#">
+        <fieldset>
+            <legend><h1>LOGIN</h1></legend>
+            <div class="error">
+                <?php
+                if (!empty($errors)) {
+                    echo '<ul>';
+                    foreach ($errors as $error) {
+                        echo '<li>' . htmlspecialchars($error) . '</li>';
+                    }
+                    echo '</ul>';
+                }
+                ?>
             </div>
 
-            <div class="clearfix"></div>
+            <label>Email:</label>
+            <input type="text" name="email" placeholder="Email"><br>
+            <label for="password">Password:</label>
+            <input type="password" name="password" placeholder="Password"><br>
+            <button type="submit" name="submit" value="submit">Submit</button>
+        </fieldset>
+    </form>
+</div>
 
-            <!-- menu profile quick info -->
-            <div class="profile clearfix">
-              <div class="profile_pic">
-                <img src="images/img.jpg" alt="..." class="img-circle profile_img">
-              </div>
-              <div class="profile_info">
-                <span>Welcome,</span>
-                
-              </div>
-            </div>
-            <!-- /menu profile quick info -->
-
-            <br />
-
-            <!-- sidebar menu -->
-            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-              <div class="menu_section">
-                <ul class="nav side-menu">
-                <li><a href="dashboard.php"><i class="fa fa-cart-plus" aria-hidden="true"></i> Dashboard<span class=""></span> </a> </li>
-                  <li><a href="pos.php"><i class="fa fa-cart-plus" aria-hidden="true"></i></i> POS <span class=""></span></a>
-                    
-                  </li>
-
-                  <li><a><i class="fa fa-edit"></i> Medicine <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="add_medicine.php">Add Medicine</a></li>
-                      <li><a href="manage_medicine.php">Manage Medicine</a></li>
-                      <li><a href="add_category.php">Add Category</a></li>
-
-                    </ul>
-
-
-                  <li><a><i class="fa fa-edit"></i> Customer <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="add_customer.php">Add Customer</a></li>
-                      <li><a href="manage_customer.php">Manage Customer</a></li>
-
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-desktop"></i> Supplier <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="add_supplier.php">Add Supplier</a></li>
-                      <li><a href="manage_supplier.php">Manage Supplier</a></li>
-
-                    </ul>
-                  </li>
-                  
-                  
-               
-              </div>
-              
-            </div>
-            <!-- /sidebar menu -->
-
-            
-          </div>
-        </div>
-<!-- navi -->
-        <div class="top_nav">
-          <div class="nav_menu clearfix" >
-              <div class="nav toggle float-left">
-                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-              </div>
-              <?php require 'topnavi.php'; ?>
-          </div>
-        </div>
-
-
-        <!-- page content -->
-        <!-- <div class="right_col" role="main">
-
-
-        <?php 
-
-        echo "this is a content";
-
-        ?>
-         
-
-
-
-        </div> -->
-        <!-- /page content -->
-
-
-
-    <!-- jQuery -->
-    <script src="../vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="../vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- FastClick -->
-    <script src="../vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="../vendors/nprogress/nprogress.js"></script>
-    <!-- Chart.js -->
-    <script src="../vendors/Chart.js/dist/Chart.min.js"></script>
-    <!-- gauge.js -->
-    <script src="../vendors/gauge.js/dist/gauge.min.js"></script>
-    <!-- bootstrap-progressbar -->
-    <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-    <!-- iCheck -->
-    <script src="../vendors/iCheck/icheck.min.js"></script>
-    <!-- Skycons -->
-    <script src="../vendors/skycons/skycons.js"></script>
-    <!-- Flot -->
-    <script src="../vendors/Flot/jquery.flot.js"></script>
-    <script src="../vendors/Flot/jquery.flot.pie.js"></script>
-    <script src="../vendors/Flot/jquery.flot.time.js"></script>
-    <script src="../vendors/Flot/jquery.flot.stack.js"></script>
-    <script src="../vendors/Flot/jquery.flot.resize.js"></script>
-    <!-- Flot plugins -->
-    <script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-    <script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-    <script src="../vendors/flot.curvedlines/curvedLines.js"></script>
-    <!-- DateJS -->
-    <script src="../vendors/DateJS/build/date.js"></script>
-    <!-- JQVMap -->
-    <script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
-    <script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-    <script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-    <!-- bootstrap-daterangepicker -->
-    <script src="../vendors/moment/min/moment.min.js"></script>
-    <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-
-    <!-- Custom Theme Scripts -->
-    <script  src=" ../build/js/custom.min.js"> </script>
-	
-  </body>
+</body>
 </html>

@@ -1,5 +1,5 @@
 
-<?php require 'index.php'; ?>
+<?php require 'sidebar.php'; ?>
 <?php require 'conn.php';  ?>
 <?php $query = "SELECT * FROM supplier";  
        $runquery = mysqli_query($conn,$query);

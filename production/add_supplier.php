@@ -1,4 +1,4 @@
-<?php require 'index.php'; ?>
+<?php require 'sidebar.php'; ?>
 <?php error_reporting(E_ALL);
 ini_set('display_errors', 1); ?>
 
@@ -89,7 +89,7 @@ require 'conn.php';
                 </div>
                 <div class="card-body">
 
-                    <form action="add_supplier.php" method="post" id="Smodel" enctype="multipart/form-data" accept-charset="utf-8" class="form-horizontal">
+                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" id="Smodel" enctype="multipart/form-data" accept-charset="utf-8" class="form-horizontal">
 
                         <div class="form-body">
 

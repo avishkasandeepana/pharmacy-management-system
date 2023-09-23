@@ -8,7 +8,7 @@ if (isset($_GET['idc'])) {
 }   ?>
 <!-- getting over row id -->
 
-<?php require 'index.php'; ?>
+<?php require 'sidebar.php'; ?>
 <?php require 'conn.php'; ?>
 
 <?php

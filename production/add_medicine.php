@@ -1,4 +1,4 @@
-<?php require 'index.php'; ?>
+<?php require 'sidebar.php'; ?>
 <?php require 'head.php' ?>
 <?php require 'conn.php';
 if (isset($_POST['submit'])) {
@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
     $expire_date = $_POST['expire_date'];
     $Quantity = $_POST['Quantity'];
     $side_effect = $_POST['side_effect'];
-    $file_name = $_FILES['image']['name'];
+    
 
 
     $sql = "INSERT INTO medicine  SET 
@@ -26,8 +26,8 @@ if (isset($_POST['submit'])) {
         box_price = '$box_price',
         expire_date = '$expire_date',
         quantity = '$Quantity',
-        side_effect = '$side_effect',
-        product_image = '$file_name'
+        side_effect = '$side_effect'
+        
         ";
 
 
@@ -103,7 +103,7 @@ if (isset($_POST['upload'])) {
                                                                                                                     echo date("l jS \of F Y h:i:s A") ?></span></h4>
                                             </div>
                                             <div class="card-body">
-                                                <form action="add_medicine.php" method="post" class="form-horizontal" id="formid" enctype="multipart/form-data" accept-charset="utf-8">
+                                                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" class="form-horizontal" id="formid" enctype="multipart/form-data" accept-charset="utf-8">
 
                                                     <div class="form-body">
 
